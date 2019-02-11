@@ -6,8 +6,7 @@
     "build": "gulp build",
     "pkg": "gulp pkg",
     "clean": "gulp clean",
-    "test": "gulp test",
-    "lint": "eslint *.js src/*.js"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",

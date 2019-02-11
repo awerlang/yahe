@@ -1,9 +1,12 @@
 # Yet Another Hints Extension (YAHE)
 
+YAHE is a browser extension that allows you to generate and show hints for each link and other clickable element in the web page.
+By typing the letters shown in the hints, you can access the links without touching your mouse.
+
 I wasn't fully satisfied with the hit-a-hint extensions available for Chrome and Firefox, so I made my own.
 These are the existing extensions that worked as inspiration for this one:
 
-* [Hints script in DWB][hhdwb]
+* Hints script in [DWB][dwb]
 * [Hit-a-Hint for Opera][hhopera] (hint code generation)
 * [Keyboard Navigation by xnoreq][kbnav]
 
@@ -64,7 +67,7 @@ Remember to rebuild after changing the values.
 * All the code for YAHE is located in the `src/` directory.
 * Rollup is used for bundling the source code to a single source file.
 * Gulp is used for piecing all the build steps together.
-* ESLint is used for style checking. Run `npm run lint` to check the source code.
+* Tests can be run with `npm run test`. Currently there's only linting available.
 
 ## License
 
@@ -93,8 +96,8 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+[dwb]: https://portix.bitbucket.io/dwb/
 [hhopera]: https://github.com/hogelog/hit-a-hint-opera
-[hhdwb]: https://bitbucket.org/portix/dwb/src/0583e44d0164/scripts/hints.js
 [kbnav]: https://chrome.google.com/webstore/detail/abcekjakjehkpheoaadhkjfcdodpjbgk
 [cws]: https://chrome.google.com/webstore/detail/eimkmfhfckmajkednnnhkacajflcjinm
 [greasemonkey]: https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/

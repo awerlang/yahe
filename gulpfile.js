@@ -25,6 +25,41 @@ async function gmHeader() {
 GM_addStyle("${cssSingleLine}");`;
 }
 
+gulp.task('lint', () =>
+  gulp.src(['src/*.js', 'gulpfile.js'])
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError())
+);
+
+gulp.task('test', ['lint']);
+
+gulp.task('chrome:js', async function() {
+  const bundle = await rollup.rollup({
+    input: './src/chrome_main.js',
+  });
+
+  await bundle.write({
+    file: './dist/chrome/yahe.js',
+    format: 'cjs',
+    sourcemap: false,
+  });
+});
+
+gulp.task('chrome:css', () =>
+  gulp.src('./stylesheets/default.css')
+      .pipe(concat('yahe.css'))
+      .pipe(gulp.dest('./dist/chrome/'))
+);
+
+gulp.task('chrome:icon', () =>
+  gulp.src('img/icon*.png').pipe(gulp.dest('./dist/chrome/'))
+);
+
+gulp.task('chrome:options', () =>
+  gulp.src('./chrome/options.*').pipe(gulp.dest('./dist/chrome/'))
+);
+
 function chromeManifest(pkg) {
   return {
     name: pkg.description,
@@ -66,32 +101,6 @@ function chromeManifest(pkg) {
   };
 }
 
-gulp.task('chrome:js', async function() {
-  const bundle = await rollup.rollup({
-    input: './src/chrome_main.js',
-  });
-
-  await bundle.write({
-    file: './dist/chrome/yahe.js',
-    format: 'cjs',
-    sourcemap: false,
-  });
-});
-
-gulp.task('chrome:css', () =>
-  gulp.src('./stylesheets/default.css')
-      .pipe(concat('yahe.css'))
-      .pipe(gulp.dest('./dist/chrome/'))
-);
-
-gulp.task('chrome:icon', () =>
-  gulp.src('img/icon*.png').pipe(gulp.dest('./dist/chrome/'))
-);
-
-gulp.task('chrome:options', () =>
-  gulp.src('./chrome/options.*').pipe(gulp.dest('./dist/chrome/'))
-);
-
 gulp.task('chrome:manifest', async function() {
   const pkg = await pkgP;
   const manifest = chromeManifest(pkg);
@@ -128,18 +137,9 @@ gulp.task('chrome:pkg', ['chrome'], () =>
 
 gulp.task('gm', ['gm:js']);
 
-gulp.task('build', ['chrome', 'gm']);
+gulp.task('build', ['test', 'chrome', 'gm']);
 
 gulp.task('pkg', ['chrome:pkg']);
-
-gulp.task('lint', () => {
-  return gulp.src(['src/*.js', 'gulpfile.js'])
-      .pipe(eslint())
-      .pipe(eslint.format())
-      .pipe(eslint.failAfterError());
-});
-
-gulp.task('test', ['lint']);
 
 gulp.task('clean', () =>
   del([

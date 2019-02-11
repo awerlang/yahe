@@ -25,21 +25,18 @@ export default function optionParser(raw) {
   };
 }
 
-function getActivateKey({activateKey}) {
-  let key = activateKey;
+function getActivateKey({key}) {
   return typeof key === 'string'
   ? key.toUpperCase().charCodeAt(0)
   : null;
 }
 
-function getActivateModifier({activateModifier}) {
-  let mod = activateModifier;
+function getActivateModifier({mod}) {
   let isValidMod = (mod === 'alt' || mod === 'meta' || mod === 'ctrl');
   return isValidMod ? mod : null;
 }
 
-function getHintCharacters({hintCharacters}) {
-  let hintChars = hintCharacters;
+function getHintCharacters({hintChars}) {
   return typeof hintChars === 'string'
   ? uniqueCharacters(hintChars.toLowerCase())
   : null;
